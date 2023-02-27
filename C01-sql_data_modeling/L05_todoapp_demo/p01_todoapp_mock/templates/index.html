@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+    <head>
+        <title>
+            ToDo
+        </title>
+
+    </head>
+    <body>
+        <h1>Items Static List</h1>
+            <li>Static item 1</li>
+            <li>Static item 2</li>
+            <li>Static item 3</li>
+            <li>Static item 4</li>
+        <h1>Items Dynamic List</h1>
+        {% for d in data %}
+            <li> {{d.description}} </li>
+        {% endfor %}
+
+    </body>
+</html>
