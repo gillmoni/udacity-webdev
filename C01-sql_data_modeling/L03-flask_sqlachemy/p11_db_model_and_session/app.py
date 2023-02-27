@@ -17,12 +17,18 @@ db = SQLAlchemy(app)
 # db.Model lets us create and manipulate data models
 # Create a Person class with db.model
 class Person(db.Model):
-    __tablename__ = 'persons'
+    __tablename__ = 'personals'
     # SQLAlchemy takes care of the __init__ method automatically.
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), nullable=False)
 
 # db.session lets us create and manipulate database transactions
+# Create the tables in database
+# it won't create the same tables over and over if they exist
+with app.app_context():
+    db.create_all()
+
+
 @app.route('/')
 def index():
     return "Hello, Moni!"
