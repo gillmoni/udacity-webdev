@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 # db.Model lets us create and manipulate data models
 # Create a Person class with db.model
 class Person(db.Model):
-    __tablename__ = 'personals'
+    __tablename__ = 'persons'
     # SQLAlchemy takes care of the __init__ method automatically.
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), nullable=False)
@@ -31,7 +31,10 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    return "Hello, Moni!"
+    # Read first record from Persons table
+    # This assumes that there's data in table
+    person = Person.query.first()
+    return f"Hello, {person.name}!"
 
 
 # This is second way to run flask
