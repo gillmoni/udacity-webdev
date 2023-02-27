@@ -22,8 +22,8 @@ def upgrade():
         batch_op.add_column(sa.Column('completed', sa.Boolean(), nullable=True))
 
         # Now adding these manually so as to make proper upgrades in db
-        # op.execute('UPDATE todos SET completed = False WHERE completed IS NULL;')
-        # op.alter_column('todos', 'completed', nullable=False)
+        op.execute('UPDATE todos SET completed = False WHERE completed IS NULL;')
+        op.alter_column('todos', 'completed', nullable=False)
 
     # ### end Alembic commands ###
 
