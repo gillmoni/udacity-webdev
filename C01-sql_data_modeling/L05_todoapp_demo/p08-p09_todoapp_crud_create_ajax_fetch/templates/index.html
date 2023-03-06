@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+    <head>
+        <title>ToDo App</title>
+        <style>
+            .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Add Item</h2>
+        <form id="form" method="post" action="/todos/create", name=field1>
+            <div>
+                <input type="text" name="description" placeholder="Add a new Todo item" id="description">
+                <input type="submit" name="ToDo" button="Create">
+            </div>
+            <div id="error" class="hidden">Something wrong in HTML!</div>
+        </form>
+        <h1>Items Static List</h1>
+            <li>Static item 1</li>
+            <li>Static item 2</li>
+            <li>Static item 3</li>
+            <li>Static item 4</li>
+        <h1>Items Dynamic List</h1>
+        <h5>Showing items with ajax fetch</h5>
+        <ul id="todo">
+            {% for d in data %}
+            <li> {{d.description}} </li>
+            {% endfor %}
+        </ul>
+        <script>
+            // Documenting Javascript code heavy to understand what's happenin.
+            document.getElementById('form').onsubmit = function(event) {
+
+                // 1. Prevent default behavior
+                event.preventDefault();
+                // 2. Get JSON using fetch request
+                //Fetch request with syntax
+                // fetch('/name', method, body, headers)
+                fetch('/todos/create', {
+                    method:'POST',
+                    body: JSON.stringify({
+                        'description': document.getElementById('description').value
+                    }),
+                    headers:{
+                        'Content-type': 'application/json'
+                    }
+                })
+                .then(function(response) { 
+                    // 2.1. Parse the response as JSON
+                    return response.json();
+                })
+                .then(function (jsonResponse){
+                    // 2.2. Use JSON response to append the child
+
+                    // 3. Create and element of type List
+                    const liItem = document.createElement('LI');
+
+                    // 3.1 Add inner item response from the HTML to list item
+                    liItem.innerHTML = jsonResponse['description'];
+
+                    // 3.2 Append the item to end of List Items; without refresh
+                    document.getElementById('todo').appendChild(liItem);
+                    // For any error keep the class hidden <styled above>
+                    document.getElementById('error').className='hidden';
+                })
+                .catch(function(){
+                    document.getElementById('error').className='';
+                    console.log("Error in adding Todo item!");
+                })
+                 // Fetch end
+            }
+        </script>
+    </body>
+</html>
+
+<!-- 
+
+    fetch('/my/request', {
+    method: 'POST',
+    body: JSON.stringify({
+        'description': 'some description here'
+    }),
+    headers: {
+        'Content-Type': 'application/json'
+        }
+    });
+
+    In this specific example we're using AJAX Fetch request asynchronusly from
+    client side, so that Upon addition of new todo item via form, the pages
+    doesn't require refresh.  This is handled on the client side and the new
+    items are added on top.  Anothre section after this we'd integrate db
+    migrations within.
+-->
