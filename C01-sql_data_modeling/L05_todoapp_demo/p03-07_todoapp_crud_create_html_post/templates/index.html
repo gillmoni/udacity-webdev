@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+    <head>
+        <title>
+            ToDo App
+        </title>
+
+    </head>
+    <body>
+        <h2>Add Item</h2>
+        <form method="post" action="/todos/create", name=field1>
+            <div>
+                <input type="text" name="description" placeholder="Add a new Todo item" id="description">
+                <input type="submit" name="ToDo" button="Create">
+            </div>
+        </form>
+        <h1>Items Static List</h1>
+            <li>Static item 1</li>
+            <li>Static item 2</li>
+            <li>Static item 3</li>
+            <li>Static item 4</li>
+        <h1>Items Dynamic List</h1>
+        {% for d in data %}
+            <li> {{d.description}} </li>
+        {% endfor %}
+        <h3>Items Static List</h3>
+    </body>
+</html>
