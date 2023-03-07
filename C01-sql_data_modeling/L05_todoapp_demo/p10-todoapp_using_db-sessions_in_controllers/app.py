@@ -34,7 +34,7 @@ def create_todo():
     # Only get description key from te json object returned.
     description = request.get_json()['description']
     try:
-        todo = Todo(description=description)
+        todo = Todo(description2=description)
         db.session.add(todo)
         db.session.commit()
         body['description'] = todo.description
